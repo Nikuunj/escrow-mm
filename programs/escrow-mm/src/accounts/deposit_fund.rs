@@ -24,7 +24,7 @@ pub struct DepositFund<'info> {
     pub maker_ata_a: InterfaceAccount<'info, TokenAccount>,
 
     #[account(
-        init_if_needed,
+        init,
         payer = maker,
         space = Escrow::DISCRIMINATOR.len() + Escrow::INIT_SPACE,
         seeds = [b"escrow", maker.key().as_ref(), mint_a.key().as_ref()],
@@ -33,7 +33,7 @@ pub struct DepositFund<'info> {
     pub escrow: Account<'info, Escrow>,
 
     #[account(
-        init_if_needed,
+        init,
         payer = maker,
         associated_token::mint = mint_a,
         associated_token::authority =  escrow,
