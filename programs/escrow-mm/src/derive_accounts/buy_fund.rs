@@ -23,5 +23,6 @@ pub struct BuyFund<'info> {
 
     pub associated_token_program: Program<'info, AssociatedToken>,
     pub token_program_a: Interface<'info, TokenInterface>,
+    pub token_program_b: Interface<'info, TokenInterface>,
     pub system_program: Program<'info, System>,
 }
