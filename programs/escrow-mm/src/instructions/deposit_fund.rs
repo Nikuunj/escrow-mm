@@ -1,8 +1,5 @@
 use crate::{DepositFund, DepositFundBumps, Escrow};
-use anchor_lang::{
-    prelude::{CpiContext, Result},
-    Key, ToAccountInfo,
-};
+use anchor_lang::prelude::*;
 use anchor_spl::token_interface::{transfer_checked, TransferChecked};
 
 impl<'info> DepositFund<'info> {
@@ -11,13 +8,17 @@ impl<'info> DepositFund<'info> {
         seeds: u64,
         amount_receive: u64,
         bump: &DepositFundBumps,
+        min_withdraw_gap: i64,
     ) -> Result<()> {
+        let clock = Clock::get()?;
         self.escrow.set_inner(Escrow {
             maker: self.maker.key(),
             mint_a: self.mint_a.key(),
             mint_b: self.mint_b.key(),
             require: amount_receive,
             bump: bump.escrow,
+            create_at: clock.unix_timestamp,
+            min_withdraw_gap,
             seeds,
         });
         Ok(())

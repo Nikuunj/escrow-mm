@@ -14,4 +14,6 @@ pub enum CustomErrorCode {
     InvalidVaultAuthority,
     #[msg("Vault empty")]
     EmptyVault,
+    #[msg("Too early to withdraw from escrow")]
+    TooEarlyToWithdraw,
 }

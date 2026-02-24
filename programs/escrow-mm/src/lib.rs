@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("FcuXNkCebST8UeqnEekXUvUS4gGq3AiqpPpbbsSrXDgu");
+declare_id!("9Nrd9Q1PgpqkiM7Yq7GCCbqUYxaFpyd3PpqxXYGSg5Mx");
 
 pub mod derive_accounts;
 pub mod errors;
@@ -9,7 +9,6 @@ pub mod states;
 
 pub use derive_accounts::*;
 pub use errors::*;
-pub use instructions::*;
 pub use states::*;
 
 #[program]
@@ -20,11 +19,12 @@ pub mod escrow_mm {
         ctx: Context<DepositFund>,
         deposit_amount: u64,
         require_fund: u64,
+        min_withdraw_gap: i64,
         seeds: u64,
     ) -> Result<()> {
         ctx.accounts.deposit_fund(deposit_amount)?;
         ctx.accounts
-            .create_vault_profile(seeds, require_fund, &ctx.bumps)
+            .create_vault_profile(seeds, require_fund, &ctx.bumps, min_withdraw_gap)
     }
 
     pub fn refund(ctx: Context<Refund>) -> Result<()> {

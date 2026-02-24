@@ -1,10 +1,16 @@
-use crate::Refund;
+use crate::{CustomErrorCode, Refund};
 
 use anchor_lang::prelude::*;
 use anchor_spl::token_interface::{close_account, transfer_checked, CloseAccount, TransferChecked};
 
 impl<'info> Refund<'info> {
     pub fn refund(&mut self) -> Result<()> {
+        let clock = Clock::get()?;
+        require!(
+            clock.unix_timestamp >= self.escrow.create_at + self.escrow.min_withdraw_gap,
+            CustomErrorCode::TooEarlyToWithdraw
+        );
+
         let signer_seeds: &[&[&[u8]]] = &[&[
             b"escrow",
             self.maker.to_account_info().key.as_ref(),
