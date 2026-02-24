@@ -13,3 +13,8 @@ Step 600/960
 
 **Idl account created:** `AwGbcypuTt9jEx19FRR9HeSo4N3x3fdAzgVXx5tPRWXu`  
 **Deploy success**
+
+
+## Test Screenshot
+
+![Test Screenshot](public/ss.png)
